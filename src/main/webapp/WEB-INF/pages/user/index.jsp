@@ -340,10 +340,10 @@ function changeStatus(rowIndex) {
 			});
 }
 function downLoad(){
-	window.open("userAction/exportUser","_blank");
+	window.open("${pageContext.request.contextPath}/userAction/exportUser","_blank");
 }
 function csvDownLoad(){
-	window.open("userAction/exportUserByCSV","_blank");
+	window.open("${pageContext.request.contextPath}/userAction/exportUserByCSV","_blank");
 }
 
 </script>

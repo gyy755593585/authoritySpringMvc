@@ -10,7 +10,7 @@ $(function() {
 	datagrid = $('#datagrid')
 			.datagrid(
 					{
-						url : 'roleAction/getRoleList',
+						url : 'getRoleList',
 						iconCls : 'icon-save',
                         pagination : true,
 			            pagePosition : 'bottom',

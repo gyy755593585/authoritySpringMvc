@@ -26,7 +26,7 @@ public interface RoleService extends BaseService<Role> {
 	 * @param id
 	 * @param permitIds
 	 */
-	void updateRolePermit(Long id, String permitIds);
+	void updateRolePermit(Long id, long[] permitIds);
 
 	/**
 	 * @param id

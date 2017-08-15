@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wuji.authority.model.Role;
 import com.wuji.authority.service.PermitService;
@@ -32,6 +34,7 @@ import com.wuji.basic.model.Pager;
  *
  */
 @Controller
+@RequestMapping("/roleAction")
 public class RoleAction extends BaseAction {
 
 	/**
@@ -48,145 +51,123 @@ public class RoleAction extends BaseAction {
 	@Autowired
 	private PermitService permitService;
 
-	private Role role = new Role();
-
-	private Long id;
-
-	private String permitIds;
-
-	private Long permitId;
-
+	@RequestMapping("/index")
 	public String index() {
-		return "index";
+		return "/role/index";
 	}
 
+	@RequestMapping("/roleAdd")
 	public String roleAdd() {
-		return "roleAdd";
+		return "/role/roleAdd";
 	}
 
-	public String roleEdit() {
-		this.id = this.role.getId();
+	@RequestMapping("/roleEdit")
+	public String roleEdit(long id) {
 		try {
-			this.role = this.roleService.load(this.id);
+			Role role = this.roleService.load(id);
+			this.request.setAttribute("role", role);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "roleEdit";
+		return "/rolerole/Edit";
 	}
 
-	public String grantPage() {
-		this.id = this.role.getId();
-		return "roleGrant";
+	@RequestMapping("/grantPage")
+	public String grantPage(long id) {
+		this.request.setAttribute("id", id);
+		return "/role/roleGrant";
 	}
 
-	public void add() {
+	@RequestMapping("/add")
+	@ResponseBody
+	public Object add(Role role) {
 		try {
-			this.roleService.add(this.role);
+			this.roleService.add(role);
 		} catch (Exception e) {
-			this.renderError(e.getMessage());
+			return this.renderError(e.getMessage());
 		}
-		this.renderSuccess("角色添加成功");
+		return this.renderSuccess("角色添加成功");
 	}
 
-	public void edit() {
+	@RequestMapping("/edit")
+	@ResponseBody
+	public Object edit(Role role) {
 		try {
-			this.roleService.update(this.role);
-			this.renderSuccess("用户修改成功");
+			this.roleService.update(role);
+			return this.renderSuccess("用户修改成功");
 		} catch (Exception e) {
 			this.logger.error("修改交易失败", e);
-			this.renderError("用户修改失败!");
+			return this.renderError("用户修改失败!");
 		}
 	}
 
-	public void delete(HttpServletRequest request) {
+	@RequestMapping("/delete")
+	@ResponseBody
+	public Object delete(HttpServletRequest request) {
 		String ids = request.getParameter("ids");
 		if (ids != null) {
 			try {
 				for (String id : ids.split(",")) {
 					this.roleService.delete(Long.parseLong(id));
 				}
-				this.renderSuccess("角色删除成功");
+				return this.renderSuccess("角色删除成功");
 			} catch (Exception e) {
-				this.renderError(e.getMessage());
 				e.printStackTrace();
+				return this.renderError(e.getMessage());
 			}
 		}
+		return this.renderError("角色删除失败");
 	}
 
-	public void grant() {
+	@RequestMapping("/grant")
+	public void grant(long id, long[] permitIds) {
 		try {
-			this.logger.info(this.role.getId().toString());
-			this.roleService.updateRolePermit(this.role.getId(), this.permitIds);
-			this.renderSuccess("授权成功");
+			this.logger.info(String.valueOf(id));
+			this.roleService.updateRolePermit(id, permitIds);
+			super.writeJson(this.renderSuccess("授权成功"));
 		} catch (Exception e) {
-			this.renderError("授权失败");
+			super.writeJson(this.renderError("授权失败"));
 			e.printStackTrace();
 		}
 	}
 
-	public void changeStatus() {
+	@RequestMapping("/changeStatus")
+	public void changeStatus(long id) {
 		try {
-			Role sysRole = this.roleService.load(this.role.getId());
-			if (this.role.getType() == 0) {
+			Role sysRole = this.roleService.load(id);
+			if (sysRole.getType() == 0) {
 				sysRole.setType(1);
 			} else {
 				sysRole.setType(0);
 			}
 			this.roleService.update(sysRole);
-			this.renderSuccess("更改角色成功");
+			super.writeJson(this.renderSuccess("更改角色成功"));
 		} catch (Exception e) {
-			this.renderError("更改角色失败");
+			super.writeJson(this.renderError("更改角色失败"));
 			e.printStackTrace();
 		}
 
 	}
 
-	public void findPermitIdListByRoleId() {
-		this.logger.info(this.role.getId().toString());
-		List<Long> permitIds = this.roleService.findPermitIdListByRoleId(this.role.getId());
-		this.renderSuccess(permitIds);
+	@RequestMapping("/findPermitIdListByRoleId")
+	public void findPermitIdListByRoleId(long id) {
+		this.logger.info(String.valueOf(id));
+		List<Long> permitIds = this.roleService.findPermitIdListByRoleId(id);
+		super.writeJson(this.renderSuccess(permitIds));
 	}
 
+	@RequestMapping("/getRoleList")
+	@ResponseBody
 	public Object getRoleList() {
 		Pager<Role> pager = this.roleService.findByPager();
 		return pager;
 	}
 
-	public Object getRoleListByPermitId() {
-		Pager<Role> pager = this.roleService.findByPermitId(this.permitId);
+	@RequestMapping("/getRoleListByPermitId")
+	@ResponseBody
+	public Object getRoleListByPermitId(long permitId) {
+		Pager<Role> pager = this.roleService.findByPermitId(permitId);
 		return pager;
-	}
-
-	public Role getRole() {
-		return this.role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getPermitIds() {
-		return this.permitIds;
-	}
-
-	public void setPermitIds(String permitIds) {
-		this.permitIds = permitIds;
-	}
-
-	public Long getPermitId() {
-		return this.permitId;
-	}
-
-	public void setPermitId(Long permitId) {
-		this.permitId = permitId;
 	}
 
 }

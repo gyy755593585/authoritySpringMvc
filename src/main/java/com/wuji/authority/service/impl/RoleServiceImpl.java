@@ -186,14 +186,13 @@ public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
 	 * java.util.List)
 	 */
 	@Override
-	public void updateRolePermit(Long id, String permitIds) {
-		String[] strings = permitIds.split(",");
+	public void updateRolePermit(Long id, long[] permitIds) {
 		this.rolePermitDao.deletByRoleId(id);
 		Role role = this.load(id);
 		RolePermit rolePermit = null;
-		for (String permitId : strings) {
+		for (long permitId : permitIds) {
 			rolePermit = new RolePermit();
-			Permit permit = this.permitDao.load(Long.parseLong(permitId));
+			Permit permit = this.permitDao.load(permitId);
 			rolePermit.setPermit(permit);
 			rolePermit.setRole(role);
 			this.rolePermitDao.add(rolePermit);

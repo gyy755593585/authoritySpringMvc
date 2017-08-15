@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wuji.authority.model.Permit;
 import com.wuji.authority.service.PermitService;
@@ -34,6 +36,7 @@ import com.wuji.authority.vo.Tree;
  *
  */
 @Controller
+@RequestMapping("/permitAction")
 public class PermitAction extends BaseAction {
 
 	/**
@@ -50,78 +53,54 @@ public class PermitAction extends BaseAction {
 	@Autowired
 	private PermitService permitService;
 
-	private Permit permit = new Permit();
-
-	private Long id;
-
-	private Long pid;
-
-	public Long getPid() {
-		return this.pid;
-	}
-
-	public void setPid(Long pid) {
-		this.pid = pid;
-	}
-
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Permit getPermit() {
-		return this.permit;
-	}
-
-	public void setPermit(Permit permit) {
-		this.permit = permit;
-	}
-
+	@RequestMapping("/index")
 	public String index() {
-		return "index";
+		return "/permit/index";
 	}
 
+	@RequestMapping("/permitAdd")
 	public String permitAdd() {
-		return "permitAdd";
+		return "/permit/permitAdd";
 	}
 
-	public String permitEdit() throws Exception {
-		this.id = this.permit.getId();
-		this.permit = this.permitService.load(this.id);
-		return "permitEdit";
+	@RequestMapping("/permitEdit")
+	public String permitEdit(long id) throws Exception {
+		Permit permit = this.permitService.load(id);
+		this.request.setAttribute("permit", permit);
+		return "/permit/permitEdit";
 	}
 
-	public void add() {
+	@RequestMapping("/add")
+	public void add(Permit permit, Long pid) {
 		try {
-			if (this.pid != null) {
-				Permit parentPermit = this.permitService.load(this.pid);
+			if (pid != null) {
+				Permit parentPermit = this.permitService.load(pid);
 				this.logger.info(parentPermit.getId().toString());
-				this.permit.setParentPermit(parentPermit);
+				permit.setParentPermit(parentPermit);
 			}
-			this.permitService.add(this.permit);
+			this.permitService.add(permit);
 		} catch (Exception e) {
-			this.renderError(e.getMessage());
+			super.writeJson(this.renderError(e.getMessage()));
 			e.printStackTrace();
 		}
-		this.renderSuccess("权限添加成功");
+		super.writeJson(this.renderSuccess("权限添加成功"));
 	}
 
-	public void edit() {
+	@RequestMapping("/edit")
+	public void edit(Permit permit) {
 		try {
-			Permit curPermit = this.permitService.load(this.permit.getId());
-			curPermit.setPermitName(this.permit.getPermitName());
-			curPermit.setPermitCode(this.permit.getPermitCode());
+			Permit curPermit = this.permitService.load(permit.getId());
+			curPermit.setPermitName(permit.getPermitName());
+			curPermit.setPermitCode(permit.getPermitCode());
 			this.permitService.update(curPermit);
-			this.renderSuccess("权限修改成功");
+			super.writeJson(this.renderSuccess("权限修改成功"));
 		} catch (Exception e) {
 			this.logger.error("修改权限失败", e);
-			this.renderError("权限修改失败!");
+			super.writeJson(this.renderError("权限修改失败!"));
 		}
 	}
 
+	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request) {
 
 		String ids = request.getParameter("ids");
@@ -131,27 +110,16 @@ public class PermitAction extends BaseAction {
 					this.permitService.delete(Long.parseLong(id));
 
 				}
-				this.renderSuccess("权限删除成功");
+				super.writeJson(this.renderSuccess("权限删除成功"));
 			} catch (Exception e) {
-				this.renderError(e.getMessage());
+				super.writeJson(this.renderError(e.getMessage()));
 				e.printStackTrace();
 			}
 		}
 	}
 
-	public void changeStatus() {
-		try {
-			Permit sysPermit = this.permitService.load(this.permit.getId());
-
-			this.permitService.update(sysPermit);
-			this.renderSuccess("更改权限成功");
-		} catch (Exception e) {
-			this.renderError("更改权限失败");
-			e.printStackTrace();
-		}
-
-	}
-
+	@RequestMapping("/getPermitAll")
+	@ResponseBody
 	public Object getPermitAll() {
 		List<PermitVo> result = null;
 		try {
@@ -175,10 +143,12 @@ public class PermitAction extends BaseAction {
 		return result;
 	}
 
-	public Object getPermitTree() {
+	@RequestMapping("/getPermitTree")
+	@ResponseBody
+	public Object getPermitTree(Long id) {
 		List<Tree> pager = null;
 		try {
-			pager = this.permitService.findAllTree(this.permit.getId());
+			pager = this.permitService.findAllTree(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return this.renderError("获取失败");

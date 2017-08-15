@@ -15,7 +15,7 @@
                     id : '${id}'
                 }, function(result) {
                     var ids;
-                    if (result.success == true && result.obj /= undefined) {
+                    if (result.success == true && result.obj != undefined) {
                         ids = $.stringToList(result.obj + '');
                     }
                     if (ids.length > 0) {

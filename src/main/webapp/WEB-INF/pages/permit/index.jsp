@@ -8,7 +8,7 @@
 	var datagrid;
 	$(function() {
 		datagrid = $('#datagrid').treegrid({
-			url : 'permitAction/getPermitAll',
+			url : '${path}/permitAction/getPermitAll',
 			iconCls : 'icon-save',
 			idField : 'id',
 			checkbox: true,
@@ -232,12 +232,12 @@
 <script type="text/javascript">
 $(function(){
 	$('#tt').tree({    
-	    url:'permitAction/getPermitTree',
+	    url:'${path}/permitAction/getPermitTree',
 	    	onClick: function(node){
 	    		var datagrid = $('#permitdatagrid')
 				.datagrid(
 						{
-							url : 'roleAction/getRoleListByPermitId',
+							url : '${path}/roleAction/getRoleListByPermitId',
 							iconCls : 'icon-save',
 	                        pagination : true,
 				            pagePosition : 'bottom',

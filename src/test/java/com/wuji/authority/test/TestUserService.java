@@ -75,15 +75,15 @@ public class TestUserService {
 	@Test
 	public void testAddPermit() {
 		Permit permit = new Permit();
-		permit.setPermitCode("userAction!getUserList");
+		permit.setPermitCode("userAction/getUserList");
 		permit.setPermitName("用户查看");
 		this.permitService.add(permit);
 	}
 
 	@Test
 	public void testAddPeritForRole() {
-		Permit permit = this.permitService.load(4L);
-		Role role = this.roleService.load(2L);
+		Permit permit = this.permitService.load(1L);
+		Role role = this.roleService.load(1L);
 		this.permitService.addPermitForRole(role, permit);
 	}
 }
