@@ -9,6 +9,8 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import com.wuji.basic.filter.SystemContextFilter;
+
 public class WebInitializer implements WebApplicationInitializer {
 
 	@Override
@@ -20,6 +22,9 @@ public class WebInitializer implements WebApplicationInitializer {
 		javax.servlet.FilterRegistration.Dynamic encodingFilter = servletContext.addFilter("enCoding",
 				new CharacterEncodingFilter("UTF-8", true, true));
 		encodingFilter.addMappingForUrlPatterns(null, true, "/*");
+		javax.servlet.FilterRegistration.Dynamic systemContextFilter = servletContext.addFilter("systemContextFilter",
+				new SystemContextFilter());
+		systemContextFilter.addMappingForUrlPatterns(null, true, "/*");
 		Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(webApplicationContext));
 		servlet.addMapping("/");
 		servlet.setLoadOnStartup(1);
