@@ -133,7 +133,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	 * User, java.util.List)
 	 */
 	@Override
-	public void update(User user, List<Long> roleIds) {
+	public void update(User user, long[] roleIds) {
 		this.userRoleDao.deleteByUserId(user.getId());
 		UserRole userRole = null;
 		for (Long roleId : roleIds) {

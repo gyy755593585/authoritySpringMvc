@@ -18,7 +18,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -166,7 +165,7 @@ public class UserAction extends BaseAction {
 	 * 用户添加
 	 */
 	@RequestMapping("/add")
-	public void add(User user, List<Long> roleIds) {
+	public void add(User user, long[] roleIds) {
 		try {
 			this.userService.add(user);
 			for (Long roleId : roleIds) {
@@ -184,7 +183,7 @@ public class UserAction extends BaseAction {
 	 */
 	@RequestMapping("/edit")
 	@ResponseBody
-	public Object edit(User user, Long[] roleIds) {
+	public Object edit(User user, long[] roleIds) {
 		try {
 			User sysUser = this.userService.load(user.getId());
 			sysUser.setNickName(user.getNickName());
@@ -194,10 +193,9 @@ public class UserAction extends BaseAction {
 			if (StringUtils.isNotBlank(user.getPassword())) {
 				sysUser.setPassword(user.getPassword());
 			}
-			List<Long> roles = Arrays.asList(roleIds);
 
-			this.logger.info(roleIds[0].toString());
-			this.userService.update(sysUser, roles);
+			this.logger.info(String.valueOf(roleIds[0]));
+			this.userService.update(sysUser, roleIds);
 			return this.renderSuccess("用户修改成功");
 		} catch (Exception e) {
 			this.logger.error("修改用户失败", e);

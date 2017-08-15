@@ -19,7 +19,6 @@ $('#userEditRoleIds').combotree({
 		<tr>
 				<td>登录名称</td>
 				<td><input id="userName"  type ="text"  name="userName" value="${ userName}" readonly="readonly" class="easyui-validatebox" placeholder="请输入登录名称" validType="length[0,19]" invalidMessage="超过了19个字符" data-options="required:true,missingMessage:'请填写登录名称'" style="width:98%;" /></td>
-				<td><input type="hidden" name="Id" value=${id}  /></td>
 			</tr>
 			<tr>
 				<td>昵称</td>

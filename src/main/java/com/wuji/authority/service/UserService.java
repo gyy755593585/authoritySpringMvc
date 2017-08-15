@@ -29,7 +29,7 @@ public interface UserService extends BaseService<User> {
 	 */
 	Pager<User> findByPage();
 
-	void update(User user, List<Long> roleIds);
+	void update(User user, long[] roleIds);
 
 	/**
 	 * @param excelObject
