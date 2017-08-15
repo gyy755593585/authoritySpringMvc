@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-6-27 16:23:20 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.wuji.authority.model.Role"  table="a_role" lazy="false">
+        <id name="id" type="java.lang.Long" access="field">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="createTime" type="java.sql.Timestamp">
+            <column name="CREATE_TIME" />
+        </property>
+        <property name="editUser" type="java.lang.String">
+            <column name="EDIT_USER" />
+        </property>
+        <property name="editTime" type="java.sql.Timestamp">
+            <column name="EDIT_TIME" />
+        </property>
+        <property name="createUser" type="java.lang.String">
+            <column name="CREATE_USER" />
+        </property>
+        <property name="roleName" type="java.lang.String">
+            <column name="ROLE_NAME" />
+        </property>
+        <property name="type" type="int">
+            <column name="TYPE" />
+        </property>
+        
+    </class>
+</hibernate-mapping>
