@@ -4,9 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -16,7 +14,9 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,7 +28,6 @@ import com.wuji.authority.service.RoleService;
 import com.wuji.authority.service.UserService;
 import com.wuji.authority.util.GlobalConstant;
 import com.wuji.authority.vo.ActivityUser;
-import com.wuji.basic.model.SystemRequestHolder;
 
 public class UserRealm extends AuthorizingRealm {
 
@@ -104,8 +103,8 @@ public class UserRealm extends AuthorizingRealm {
 				ByteSource.Util.bytes(loginUser.getSalt()), // salt=username+salt
 				this.getName() // realm name
 		);
-		HttpServletRequest request = SystemRequestHolder.getSystemRequest().getRequest();
-		HttpSession session = request.getSession();
+		Subject subject = SecurityUtils.getSubject();
+		Session session = subject.getSession();
 		session.setAttribute(GlobalConstant.ACTIVITY_USER, activityUser);
 		return authenticationInfo;
 	}

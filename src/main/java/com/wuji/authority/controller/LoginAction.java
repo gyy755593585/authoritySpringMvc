@@ -55,12 +55,12 @@ public class LoginAction extends BaseAction {
 
 	@RequestMapping("/login")
 	public String login() {
-		return "login";
+		return "/login";
 	}
 
 	@RequestMapping("/index")
 	public String index() {
-		return "index";
+		return "/index";
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class LoginAction extends BaseAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "userInfo";
+		return "/user/userInfo";
 	}
 
 	/**

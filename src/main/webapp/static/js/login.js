@@ -42,7 +42,7 @@ $(function () {
    
     // 登录
     $('#loginform').form({
-        url: basePath + '/loginAction!register',
+        url: basePath + '/loginAction/register',
         onSubmit : function() {
             progressLoad();
             var isValid = $(this).form('validate');

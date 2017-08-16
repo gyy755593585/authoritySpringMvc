@@ -3,9 +3,9 @@
 <script type="text/javascript" charset="utf-8">
 	function logout(b) {
 		$('#sessionInfoDiv').html('');
-		$.post('${pageContext.request.contextPath}/loginAction!logout', function() {
+		$.post('${pageContext.request.contextPath}/loginAction/logout', function() {
 			if (b) {
-					location.replace('${pageContext.request.contextPath}/login.jsp');
+					location.replace('${pageContext.request.contextPath}/login');
 			} else {
 				loginDialog.dialog('open');
 			}
@@ -14,7 +14,7 @@
 	function showUserInfo() {
 		var p = parent.dj.dialog({
 			title : '用户信息',
-			href : '${pageContext.request.contextPath}/loginAction!userInfo?id=${sessionScope.activityUser.id}',
+			href : '${pageContext.request.contextPath}/loginAction/userInfo?id=${sessionScope.activityUser.id}',
 			width : 490,
 			height : 285,
 			buttons : [ {

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.Resource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -78,5 +79,10 @@ public class MyDaoConfig {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
 		transactionManager.setSessionFactory(this.sessionFactory().getObject());
 		return transactionManager;
+	}
+
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertyConfigure() {
+		return new PropertySourcesPlaceholderConfigurer();
 	}
 }
