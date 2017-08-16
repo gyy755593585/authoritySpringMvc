@@ -14,9 +14,9 @@
 package com.wuji.authority.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONArray;
 import com.wuji.authority.model.Role;
@@ -300,12 +301,14 @@ public class UserAction extends BaseAction {
 
 	@RequestMapping("/importExcel")
 	@ResponseBody
-	public Object importExcel() {
-		FileInputStream fis = null;
+	public Object importExcel(MultipartFile excelFile) {
+		InputStream fis = null;
 		try {
 
-			fis = new FileInputStream(this.excelFile);
-			List<List<Object>> excelObject = ImportExcelUtil.getBankListByExcel(fis, 2, this.excelFileFileName);
+			fis = excelFile.getInputStream();
+			this.logger.info(excelFile.getOriginalFilename());
+			List<List<Object>> excelObject = ImportExcelUtil.getBankListByExcel(fis, 2,
+					excelFile.getOriginalFilename());
 			this.userService.addUserByExcel(excelObject);
 			return this.renderSuccess();
 		} catch (FileNotFoundException e) {
@@ -327,15 +330,15 @@ public class UserAction extends BaseAction {
 
 	@RequestMapping("/importCSV")
 	@ResponseBody
-	public Object importCSV() {
-		FileInputStream fis = null;
+	public Object importCSV(MultipartFile csvFile) {
+		InputStream is = null;
 		try {
 
-			fis = new FileInputStream(this.csvFile);
-			List<List<Object>> excelObject = ImportCSVUtil.importCSVUtil(fis,
+			is = csvFile.getInputStream();
+			List<List<Object>> excelObject = ImportCSVUtil.importCSVUtil(is,
 					new String[] { "userName", "nickName", "password" });
 			this.userService.addUserByExcel(excelObject);
-			return this.renderSuccess();
+			return this.renderSuccess("导入成功");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return this.renderError(e.getMessage());
@@ -343,9 +346,9 @@ public class UserAction extends BaseAction {
 			e.printStackTrace();
 			return this.renderError(e.getMessage());
 		} finally {
-			if (fis != null) {
+			if (is != null) {
 				try {
-					fis.close();
+					is.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

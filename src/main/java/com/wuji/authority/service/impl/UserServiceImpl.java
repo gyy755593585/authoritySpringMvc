@@ -19,7 +19,6 @@ import com.wuji.authority.model.User;
 import com.wuji.authority.model.UserRole;
 import com.wuji.authority.service.UserService;
 import com.wuji.authority.shiro.PasswordHelper;
-import com.wuji.authority.util.SecurityUtil;
 import com.wuji.basic.model.Pager;
 import com.wuji.basic.model.SystemException;
 
@@ -171,10 +170,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 				throw new SystemException("用户名称已存在" + jmsg);
 			}
 			user.setNickName(list.get(1).toString());
-			user.setSalt(SecurityUtil.getSalt());
-			user.setPassword(SecurityUtil.md5(user.getSalt(), list.get(2).toString()));
+			user.setPassword(list.get(2).toString());
 			user.setType(1);
 			user.setStatus(0);
+			this.passwordHelper.encryptPassword(user);
 			this.add(user);
 		}
 	}
