@@ -24,9 +24,6 @@ import com.wuji.authority.shiro.UserRealm;
 
 @Configuration
 public class ShiroConfig {
-	// @Value("${shiro.filterChainDefinitions}")
-	private String filterChainDefinitions = "/static/**=anon" + "/notAccess.jsp=anon" + "/loginAction/register=anon"
-			+ "/login.jsp=anon" + "/loginAction/logout=anon" + "/**=authc";
 
 	@Bean
 	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
@@ -121,7 +118,7 @@ public class ShiroConfig {
 		return formAuthenticationFilter;
 	}
 
-	@Bean
+	@Bean(name = "shiroFilter")
 	public ShiroFilterFactoryBean shiroFilter() {
 		ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
 		shiroFilter.setSecurityManager(this.securityManager());
