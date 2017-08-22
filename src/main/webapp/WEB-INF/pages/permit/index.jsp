@@ -8,7 +8,7 @@
 	var datagrid;
 	$(function() {
 		datagrid = $('#datagrid').treegrid({
-			url : '${path}/permitAction/getPermitAll',
+			url : '${path}/permit/getPermitAll',
 			iconCls : 'icon-save',
 			idField : 'id',
 			checkbox: true,
@@ -81,7 +81,7 @@
 			var p = parent.dj
 					.dialog({
 						title : '修改角色',
-						href : '${pageContext.request.contextPath}/permitAction/permitEdit?id='
+						href : '${pageContext.request.contextPath}/permit/permitEdit?id='
 								+ rows[0].id,
 						width : 600,
 						height : 450,
@@ -93,7 +93,7 @@
 										.form(
 												'submit',
 												{
-													url : '${pageContext.request.contextPath}/permitAction/edit',
+													url : '${pageContext.request.contextPath}/permit/edit',
 													success : function(d) {
 														var json = $
 																.parseJSON(d);
@@ -132,7 +132,7 @@
 		var p = parent.dj
 				.dialog({
 					title : '新增角色',
-					href : '${pageContext.request.contextPath}/permitAction/permitAdd',
+					href : '${pageContext.request.contextPath}/permit/permitAdd',
 					width : 600,
 					height : 450,
 					buttons : [ {
@@ -141,7 +141,7 @@
 							var f = p.find('form');
 							f
 									.form({
-										url : '${pageContext.request.contextPath}/permitAction/add',
+										url : '${pageContext.request.contextPath}/permit/add',
 										success : function(d) {
 											var json = $.parseJSON(d);
 											if (json.success) {
@@ -174,7 +174,7 @@
 									}
 									$
 											.ajax({
-												url : '${pageContext.request.contextPath}/permitAction/delete',
+												url : '${pageContext.request.contextPath}/permit/delete',
 												data : {
 													ids : ids.join(',')
 												},
@@ -209,7 +209,7 @@
 								id = row.id;
 								$
 										.ajax({
-											url : '${pageContext.request.contextPath}/sysPermitAction/changeStatus',
+											url : '${pageContext.request.contextPath}/syspermit/changeStatus',
 											data : {
 												id : id,
 												isAdmin : isAdmin
@@ -232,12 +232,12 @@
 <script type="text/javascript">
 $(function(){
 	$('#tt').tree({    
-	    url:'${path}/permitAction/getPermitTree',
+	    url:'${path}/permit/getPermitTree',
 	    	onClick: function(node){
 	    		var datagrid = $('#permitdatagrid')
 				.datagrid(
 						{
-							url : '${path}/roleAction/getRoleListByPermitId',
+							url : '${path}/role/getRoleListByPermitId',
 							iconCls : 'icon-save',
 	                        pagination : true,
 				            pagePosition : 'bottom',

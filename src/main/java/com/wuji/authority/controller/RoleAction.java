@@ -19,13 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wuji.authority.model.Role;
-import com.wuji.authority.service.PermitService;
 import com.wuji.authority.service.RoleService;
-import com.wuji.authority.service.UserService;
 import com.wuji.basic.model.Pager;
 
 /**
@@ -34,31 +33,15 @@ import com.wuji.basic.model.Pager;
  *
  */
 @Controller
-@RequestMapping("/roleAction")
+@RequestMapping("/role")
 public class RoleAction extends BaseAction {
-
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
-
-	@Autowired
-	private UserService userService;
 
 	@Autowired
 	private RoleService roleService;
 
-	@Autowired
-	private PermitService permitService;
-
-	@RequestMapping("/index")
-	public String index() {
-		return "/role/index";
-	}
-
-	@RequestMapping("/roleAdd")
-	public String roleAdd() {
-		return "/role/roleAdd";
+	@RequestMapping("/{page}")
+	public String showPage(@PathVariable String page) {
+		return "/role/" + page;
 	}
 
 	@RequestMapping("/roleEdit")

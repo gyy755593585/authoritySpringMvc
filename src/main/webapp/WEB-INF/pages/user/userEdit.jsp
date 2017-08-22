@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript" charset="utf-8">
 $('#userEditRoleIds').combotree({
-	 url: '${pageContext.request.contextPath}/userAction/getRoleTree',
+	 url: '${pageContext.request.contextPath}/user/getRoleTree',
     parentField : 'pid',
     lines : true,
     panelHeight : 'auto',

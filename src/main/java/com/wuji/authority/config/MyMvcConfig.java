@@ -8,12 +8,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+
+import com.wuji.authority.web.interceptor.PermissionInterceptor;
 
 @Configuration
 @EnableWebMvc
@@ -47,15 +50,24 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/index").setViewName("index");
 		registry.addViewController("/login").setViewName("login");
-		registry.addViewController("/converter").setViewName("converter");
-		registry.addViewController("/sse").setViewName("sse");
-		registry.addViewController("/async").setViewName("async");
+
 	}
 
 	@Override
 	public void configurePathMatch(PathMatchConfigurer configurer) {
 		// 允许匹配.后边的值
 		configurer.setUseSuffixPatternMatch(false);
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(this.permissionInterceptor());
+	}
+
+	@Bean
+	public PermissionInterceptor permissionInterceptor() {
+		PermissionInterceptor permissionInterceptor = new PermissionInterceptor();
+		return permissionInterceptor;
 	}
 
 }

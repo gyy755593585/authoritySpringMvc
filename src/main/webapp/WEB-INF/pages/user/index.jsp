@@ -140,7 +140,7 @@ function edit() {
 		var p = parent.dj
 				.dialog( {
 					title : '修改用户',
-					href : '${pageContext.request.contextPath}/userAction/userEdit?id=' + rows[0].id,
+					href : '${pageContext.request.contextPath}/user/userEdit?id=' + rows[0].id,
 					width : 600,
 					height : 450,
 					buttons : [ {
@@ -151,7 +151,7 @@ function edit() {
 									.form(
 											'submit',
 											{
-												url : '${pageContext.request.contextPath}/userAction/edit',
+												url : '${pageContext.request.contextPath}/user/edit',
 												success : function(d) {
 													var json = $.parseJSON(d);
 													if (json.success) {
@@ -188,7 +188,7 @@ function excelUpload() {
 		var p = parent.dj
 				.dialog( {
 					title : '导入用户',
-					href : '${pageContext.request.contextPath}/userAction/excelUpload' ,
+					href : '${pageContext.request.contextPath}/user/excelUpload' ,
 					width : 600,
 					height : 450,
 					buttons : [ {
@@ -199,7 +199,7 @@ function excelUpload() {
 									.form(
 											'submit',
 											{
-												url : '${pageContext.request.contextPath}/userAction/importExcel',
+												url : '${pageContext.request.contextPath}/user/importExcel',
 												success : function(d) {
 													var json = $.parseJSON(d);
 													if (json.success) {
@@ -223,7 +223,7 @@ function csvUpload() {
 		var p = parent.dj
 				.dialog( {
 					title : '导入用户',
-					href : '${pageContext.request.contextPath}/userAction/csvUpload' ,
+					href : '${pageContext.request.contextPath}/user/csvUpload' ,
 					width : 600,
 					height : 450,
 					buttons : [ {
@@ -234,7 +234,7 @@ function csvUpload() {
 									.form(
 											'submit',
 											{
-												url : '${pageContext.request.contextPath}/userAction/importCSV',
+												url : '${pageContext.request.contextPath}/user/importCSV',
 												success : function(d) {
 													var json = $.parseJSON(d);
 													if (json.success) {
@@ -257,7 +257,7 @@ function csvUpload() {
 function append() {
 	var p = parent.$.modalDialog( {
 				title : '新增用户',
-				href : '${pageContext.request.contextPath}/userAction/userAdd',
+				href : '${pageContext.request.contextPath}/user/userAdd',
 				width : 600,
 				height : 450,
 				buttons : [ {
@@ -285,7 +285,7 @@ function remove() {
 								}
 								$
 										.ajax( {
-											url : '${pageContext.request.contextPath}/userAction/delete',
+											url : '${pageContext.request.contextPath}/user/delete',
 											data : {
 												ids : ids.join(',')
 											},
@@ -320,7 +320,7 @@ function changeStatus(rowIndex) {
 					id=row.id;
 					status=
 					$.ajax( {
-								url : '${pageContext.request.contextPath}/userAction/changeStatus',
+								url : '${pageContext.request.contextPath}/user/changeStatus',
 								data : {
 									id : id,
 									status:status
@@ -340,10 +340,10 @@ function changeStatus(rowIndex) {
 			});
 }
 function downLoad(){
-	window.open("${pageContext.request.contextPath}/userAction/exportUser","_blank");
+	window.open("${pageContext.request.contextPath}/user/exportUser","_blank");
 }
 function csvDownLoad(){
-	window.open("${pageContext.request.contextPath}/userAction/exportUserByCSV","_blank");
+	window.open("${pageContext.request.contextPath}/user/exportUserByCSV","_blank");
 }
 
 </script>

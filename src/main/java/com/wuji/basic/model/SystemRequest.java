@@ -16,6 +16,8 @@ public class SystemRequest {
 
 	private int pageOffset;
 
+	private int page;
+
 	private String sort;
 
 	private String order;
@@ -29,6 +31,14 @@ public class SystemRequest {
 			this.realpath = this.request.getSession().getServletContext().getRealPath("");
 		}
 		return this.realpath;
+	}
+
+	public int getPage() {
+		return this.page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
 	}
 
 	public void setRealpath(String realpath) {

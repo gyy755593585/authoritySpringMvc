@@ -13,7 +13,6 @@
 
 package com.wuji.authority.controller;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,7 +51,7 @@ import com.wuji.basic.model.Pager;
  *
  */
 @Controller
-@RequestMapping("/userAction")
+@RequestMapping("/user")
 public class UserAction extends BaseAction {
 
 	@Autowired
@@ -60,84 +60,9 @@ public class UserAction extends BaseAction {
 	@Autowired
 	private RoleService roleService;
 
-	private File excelFile;// 与jsp页面的file标签的name属性一样
-
-	private String excelFileFileName;// File对象的名称+FileName,一定要这样写，不然名称获取不到
-
-	private File csvFile;// 与jsp页面的file标签的name属性一样
-
-	private String csvFileFileName;// File对象的名称+FileName,一定要这样写，不然名称获取不到
-
-	public File getCsvFile() {
-		return this.csvFile;
-	}
-
-	public void setCsvFile(File csvFile) {
-		this.csvFile = csvFile;
-	}
-
-	public String getCsvFileFileName() {
-		return this.csvFileFileName;
-	}
-
-	public void setCsvFileFileName(String csvFileFileName) {
-		this.csvFileFileName = csvFileFileName;
-	}
-
-	public File getExcelFile() {
-		return this.excelFile;
-	}
-
-	public void setExcelFile(File excelFile) {
-		this.excelFile = excelFile;
-	}
-
-	public String getExcelFileFileName() {
-		return this.excelFileFileName;
-	}
-
-	public void setExcelFileFileName(String excelFileFileName) {
-		this.excelFileFileName = excelFileFileName;
-	}
-
-	/**
-	 * 页面跳转
-	 *
-	 * @return
-	 */
-	@RequestMapping("/index")
-	public String index() {
-		return "user/index";
-	}
-
-	/**
-	 * 页面跳转
-	 *
-	 * @return
-	 */
-	@RequestMapping("/userAdd")
-	public String userAdd() {
-		return "user/userAdd";
-	}
-
-	/**
-	 * 页面跳转
-	 *
-	 * @return
-	 */
-	@RequestMapping("/excelUpload")
-	public String excelUpload() {
-		return "user/excelUpload";
-	}
-
-	/**
-	 * 页面跳转
-	 *
-	 * @return
-	 */
-	@RequestMapping("/csvUpload")
-	public String csvUpload() {
-		return "user/csvUpload";
+	@RequestMapping("/{page}")
+	public String showPage(@PathVariable String page) {
+		return "/user/" + page;
 	}
 
 	/**

@@ -4,14 +4,14 @@
     var permitTree;
     $(function() {
     	permitTree = $('#permitTree').tree({
-            url : '${path }/permitAction/getPermitTree',
+            url : '${path }/permit/getPermitTree',
             parentField : 'pid',
             lines : true,
             checkbox : true,
             onClick : function(node) {},
             onLoadSuccess : function(node, data) {
                 progressLoad();
-                $.post( '${path }/roleAction/findPermitIdListByRoleId', {
+                $.post( '${path }/role/findPermitIdListByRoleId', {
                     id : '${id}'
                 }, function(result) {
                     var ids;
@@ -32,7 +32,7 @@
         });
 
         $('#roleGrantForm').form({
-            url : '${path }/roleAction/grant',
+            url : '${path }/role/grant',
             onSubmit : function() {
                 progressLoad();
                 var isValid = $(this).form('validate');

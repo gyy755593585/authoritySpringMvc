@@ -3,14 +3,14 @@
 <script type="text/javascript">
     $(function() {
         $('#userAddRoleIds').combotree({
-            url: '${pageContext.request.contextPath}/userAction/getRoleTree',
+            url: '${pageContext.request.contextPath}/user/getRoleTree',
             multiple: true,
             required: true,
             panelHeight : 'auto'
             
         });
         $('#userAddForm').form({
-            url : '${path }/userAction/add',
+            url : '${path }/user/add',
             onSubmit : function() {
                 progressLoad();
                 var isValid = $(this).form('validate');

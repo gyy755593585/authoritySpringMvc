@@ -11,17 +11,17 @@
 			<li>
 					<a class="easyui-linkbutton" data-options="iconCls:'icon-add'"
 						plain="true" href="javascript:void(0);"
-						onclick="addTab('用户管理','/userAction/index','icon-add')">用户管理</a>
+						onclick="addTab('用户管理','/user/index','icon-add')">用户管理</a>
 				</li>
 			<li>
 					<a class="easyui-linkbutton" data-options="iconCls:'icon-add'"
 						plain="true" href="javascript:void(0);"
-						onclick="addTab('角色管理','/roleAction/index','icon-add')">角色管理</a>
+						onclick="addTab('角色管理','/role/index','icon-add')">角色管理</a>
 				</li>
 			<li>
 					<a class="easyui-linkbutton" data-options="iconCls:'icon-add'"
 						plain="true" href="javascript:void(0);"
-						onclick="addTab('权限管理','/permitAction/index','icon-add')">权限管理</a>
+						onclick="addTab('权限管理','/permit/index','icon-add')">权限管理</a>
 				</li>
 			</ul>
 		</div>

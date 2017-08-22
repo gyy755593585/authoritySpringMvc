@@ -101,7 +101,7 @@ function edit() {
 		var p = parent.dj
 				.dialog( {
 					title : '修改角色',
-					href : '${pageContext.request.contextPath}/roleAction/roleEdit?id=' + rows[0].id,
+					href : '${pageContext.request.contextPath}/role/roleEdit?id=' + rows[0].id,
 					width : 600,
 					height : 450,
 					buttons : [ {
@@ -112,7 +112,7 @@ function edit() {
 									.form(
 											'submit',
 											{
-												url : '${pageContext.request.contextPath}/roleAction/edit',
+												url : '${pageContext.request.contextPath}/role/edit',
 												success : function(d) {
 													var json = $.parseJSON(d);
 													if (json.success) {
@@ -149,7 +149,7 @@ function append() {
 	var p = parent.dj
 			.dialog( {
 				title : '新增角色',
-				href : '${pageContext.request.contextPath}/roleAction/roleAdd',
+				href : '${pageContext.request.contextPath}/role/roleAdd',
 				width : 600,
 				height : 450,
 				buttons : [ {
@@ -157,7 +157,7 @@ function append() {
 					handler : function() {
 						var f = p.find('form');
 						f.form( {
-									url : '${pageContext.request.contextPath}/roleAction/add',
+									url : '${pageContext.request.contextPath}/role/add',
 									success : function(d) {
 										var json = $.parseJSON(d);
 										if (json.success) {
@@ -190,7 +190,7 @@ function remove() {
 								}
 								$
 										.ajax( {
-											url : '${pageContext.request.contextPath}/roleAction/delete',
+											url : '${pageContext.request.contextPath}/role/delete',
 											data : {
 												ids : ids.join(',')
 											},
@@ -224,7 +224,7 @@ function changeStatus(rowIndex) {
 				if (r) {
 					id=row.id;
 					$.ajax( {
-								url : '${pageContext.request.contextPath}/roleAction/changeStatus',
+								url : '${pageContext.request.contextPath}/role/changeStatus',
 								data : {
 									id : id,
 									isAdmin:isAdmin
@@ -255,7 +255,7 @@ function grantRoleFun(id) {
         title : '授权',
         width : 500,
         height : 500,
-        href : '${path }/roleAction/grantPage?id=' + id,
+        href : '${path }/role/grantPage?id=' + id,
         buttons : [ {
             text : '确定',
             handler : function() {

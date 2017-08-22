@@ -20,13 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wuji.authority.model.Permit;
 import com.wuji.authority.service.PermitService;
-import com.wuji.authority.service.RoleService;
-import com.wuji.authority.service.UserService;
 import com.wuji.authority.vo.PermitVo;
 import com.wuji.authority.vo.Tree;
 
@@ -36,32 +35,19 @@ import com.wuji.authority.vo.Tree;
  *
  */
 @Controller
-@RequestMapping("/permitAction")
+@RequestMapping("/permit")
 public class PermitAction extends BaseAction {
 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 1L;
-
-	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private RoleService roleService;
+	@RequestMapping("/{page}")
+	public String showPage(@PathVariable String page) {
+		return "/permit/" + page;
+	}
 
 	@Autowired
 	private PermitService permitService;
-
-	@RequestMapping("/index")
-	public String index() {
-		return "/permit/index";
-	}
-
-	@RequestMapping("/permitAdd")
-	public String permitAdd() {
-		return "/permit/permitAdd";
-	}
 
 	@RequestMapping("/permitEdit")
 	public String permitEdit(long id) throws Exception {

@@ -3,7 +3,7 @@
 <script type="text/javascript">
     $(function() {
         $('#resourceAddPid').combotree({
-            url : '${pageContext.request.contextPath}/permitAction/getPermitTree',
+            url : '${pageContext.request.contextPath}/permit/getPermitTree',
             parentField : 'pid',
             lines : true,
             panelHeight : 'auto'
