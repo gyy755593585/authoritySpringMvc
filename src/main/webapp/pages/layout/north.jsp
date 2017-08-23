@@ -5,7 +5,7 @@
 		$('#sessionInfoDiv').html('');
 		$.post('${pageContext.request.contextPath}/loginAction/logout', function() {
 			if (b) {
-					location.replace('${pageContext.request.contextPath}/login');
+					location.replace('${pageContext.request.contextPath}/login.jsp');
 			} else {
 				loginDialog.dialog('open');
 			}

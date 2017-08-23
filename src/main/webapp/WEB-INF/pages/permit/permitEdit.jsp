@@ -10,7 +10,6 @@
 		<tr>
 				<td>权限名称</td>
 				<td><input id="permitName"  type ="text"  name="permitName" value="${permitName }" class="easyui-validatebox" placeholder="请输入权限名称"  data-options="required:true,missingMessage:'请输入权限名称'" style="width:98%;" /></td>
-				<td><input type="hidden" name="Id" value=${id}  /></td>
 			</tr>
 			<tr>
 				<td>权限编码</td>

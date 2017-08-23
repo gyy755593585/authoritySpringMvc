@@ -4,6 +4,7 @@
 package com.wuji.authority.test;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -86,4 +87,21 @@ public class TestUserService {
 		Role role = this.roleService.load(1L);
 		this.permitService.addPermitForRole(role, permit);
 	}
+
+	@Test
+	public void testGetRolesByUserName() {
+		List<Role> list = this.roleService.findRoleByUserName("wuji");
+		for (Role role : list) {
+			System.out.println(role.getRoleName() + role.getId() + role.getType());
+		}
+	}
+
+	@Test
+	public void testGetPermitByRoleId() {
+		List<Permit> list = this.permitService.findPermitByRoleId(2L);
+		for (Permit permit : list) {
+			System.out.println(permit.getPermitCode());
+		}
+	}
+
 }

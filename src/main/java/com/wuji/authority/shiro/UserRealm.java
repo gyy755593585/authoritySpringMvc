@@ -18,6 +18,8 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wuji.authority.model.Permit;
@@ -30,7 +32,7 @@ import com.wuji.authority.util.GlobalConstant;
 import com.wuji.authority.vo.ActivityUser;
 
 public class UserRealm extends AuthorizingRealm {
-
+	private static Logger log = LoggerFactory.getLogger(UserRealm.class);
 	@Autowired
 	private UserService userService;
 
@@ -87,13 +89,11 @@ public class UserRealm extends AuthorizingRealm {
 			List<Permit> permitList = this.permitService.findPermitByRoleId(role.getId());
 			for (Permit systemPermit2 : permitList) {
 				String permitCode = systemPermit2.getPermitCode();
+				log.info(permitCode);
 				permits.add(permitCode);
 
 			}
 			roles.add(role.getRoleName());
-		}
-		if (activityUser.isAdmin()) {
-
 		}
 		activityUser.setPermitCodes(permits);
 		activityUser.setRoles(roles);

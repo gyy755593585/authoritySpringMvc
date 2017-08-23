@@ -5,12 +5,11 @@
 </script>
 <div style="padding: 5px;">
 	<form method="post">
-		<input name="id" type="hidden" />
 		<table class="tableForm">
 		<tr>
 				<td>角色名称</td>
 				<td><input id="roleName"  type ="text"  name="roleName" value="roleName"  class="easyui-validatebox" placeholder="请输入登录名称" validType="length[0,19]" invalidMessage="超过了19个字符" data-options="required:true,missingMessage:'请填写登录名称'" style="width:98%;" /></td>
-				<td><input type="hidden" name="Id" value=${id} /></td>
+				<td><input id="id" type="hidden" name="id" value="${id}" /></td>
 			</tr>
 			
 			<tr>
